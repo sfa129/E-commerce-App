@@ -5,6 +5,7 @@ import Layout from './Layout.jsx';
 import Home from './Components/Home/Home.jsx';
 import Login from './Components/Login/Login.jsx';
 import AddToCart from './Components/AddToCart/AddToCart.jsx';
+import ProductDetail from './Components/ProductDetail/ProductDetail.jsx';
 import './index.css'; // This line is essential
 import { Provider } from "react-redux";
 import { store } from "./app/store.js";
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
       <Route path='' element={<Home />} />
       <Route path='Login' element={<Login />} />
       <Route path='AddToCart' element={<AddToCart />} />
+      <Route path="/product/:id" element={<ProductDetail />} />
     </Route>
   )
 );
