@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from "../cart/cartSlice";
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -31,6 +33,12 @@ const ProductList = () => {
         });
         setFiltered(filteredData);
     }, [searchTerm, priceRange, selectedCategory, products]);
+
+    // AddToCart Functionalty
+    const dispatch = useDispatch();
+    const handleAddToCart = (product) => {
+        dispatch(addToCart(product));
+    };
 
     return (
         <div className="p-6 max-w-7xl mx-auto">
@@ -112,6 +120,15 @@ const ProductList = () => {
                                         <button className="text-center">Details</button>
                                     </div>
                                 </Link>
+                                <div key={product.id} className="border my-2 w-28 rounded shadow">
+                                    
+                                    <button
+                                        onClick={() => handleAddToCart(product)}
+                                        className="mt-2 bg-blue-600 text-white px-3 py-1 rounded"
+                                    >
+                                        Add to Cart
+                                    </button>
+                                </div>
                             </div>
                         ))
                     ) : (

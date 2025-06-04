@@ -1,6 +1,7 @@
 import React from 'react';
 import heroimg from '../../assets'
 import ProductList from '../../features/products/ProductList'
+
 function Home() {
   return (
     <>

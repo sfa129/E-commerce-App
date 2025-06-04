@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../features/cart/cartSlice';
+
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -21,6 +24,14 @@ const ProductDetail = () => {
 
   if (!product) return <div className="p-6">Loading...</div>;
 
+  //AddToCart
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
+
+
   return (
     <div className="max-w-4xl mx-auto p-6">
       <Link to="/" className="text-blue-600 underline mb-4 inline-block">← Back to Products</Link>
@@ -40,6 +51,13 @@ const ProductDetail = () => {
           <p className="text-sm text-yellow-600">
             Rating: {product.rating?.rate} ⭐ ({product.rating?.count} reviews)
           </p>
+          <button
+            onClick={handleAddToCart}
+            className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+          >
+            Add to Cart
+          </button>
+
         </div>
       </div>
     </div>
