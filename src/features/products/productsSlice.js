@@ -6,7 +6,7 @@ export const fetchProducts = createAsyncThunk(
   async () => {
     const res = await fetch("https://fakestoreapi.com/products");
     const data = await res.json();
-    // ✅ API returns: data.data.products
+    // ✅ API returns: if data is in the array, so we access data.data or data.data.products (like this)
     return data;
   }
 );
