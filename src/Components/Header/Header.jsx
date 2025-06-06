@@ -1,10 +1,24 @@
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
+import { logoutUser } from "../../features/auth/authSlice";
+
 
 
 function Header() {
   const cartItems = useSelector((state) => state.cart.items);
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => dispatch(logoutUser()))
+      .catch(err => console.error("Logout error", err));
+  }
+
   return (
     <nav className="bg-[#fff7e3] h-[60px] flex ">
       <div className='flex items-center justify-between w-[950px] mx-auto'>
@@ -22,7 +36,16 @@ function Header() {
               </span>
             )}
           </div>
-          <Link to="/Login">Login</Link>
+          <Link to="/signup">Signup</Link>
+          
+          {user ? (
+            <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded">
+              Logout
+            </button>
+          ) : (
+            <Link to="/login" className='bg-blue-500 text-white px-4 py-2 rounded'>Login</Link>
+            
+          )}
         </div>
       </div>
 
