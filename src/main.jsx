@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import Layout from './Layout.jsx';
 import Home from './Components/Home/Home.jsx';
-import Login from './Components/Login/Login.jsx';
+import Register from './Components/Registration/RegistrationForm.jsx'
+import Login from './Components/Registration/LoginForm.jsx';
 import AddToCart from './Components/AddToCart/AddToCart.jsx';
 import ProductDetail from './Components/ProductDetail/ProductDetail.jsx';
 import './index.css'; // This line is essential
@@ -14,7 +15,8 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
       <Route path='' element={<Home />} />
-      <Route path='Login' element={<Login />} />
+      <Route path='/Register' element={<Register />} />
+      <Route path='/Login' element={<Login />} />
       <Route path='AddToCart' element={<AddToCart />} />
       <Route path="/product/:id" element={<ProductDetail />} />
     </Route>
