@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { saveCartToFirestore, loadCartFromFirestore } from '../../features/cart/firebaseCartAPI';
 
 const loadCartFromLocalStorage = () => {
   try {
@@ -18,6 +19,23 @@ const saveCartToLocalStorage = (cartItems) => {
     console.warn('Could not save cart to localStorage', e);
   }
 };
+
+// 🔁 Thunks for Firestore
+export const loadCartFromFirestoreThunk = createAsyncThunk(
+  'cart/loadFromFirestore',
+  async (uid) => {
+    const items = await loadCartFromFirestore(uid);
+    saveCartToLocalStorage(items); // Keep localStorage in sync
+    return items;
+  }
+);
+
+export const saveCartToFirestoreThunk = createAsyncThunk(
+  'cart/saveToFirestore',
+  async ({ uid, cartItems }) => {
+    await saveCartToFirestore(uid, cartItems);
+  }
+);
 
 const initialState = {
   items: loadCartFromLocalStorage(),
@@ -59,7 +77,20 @@ const cartSlice = createSlice({
       saveCartToLocalStorage(state.items);
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loadCartFromFirestoreThunk.fulfilled, (state, action) => {
+        state.items = action.payload;
+      });
+  }
 });
 
-export const { addToCart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  clearCart,
+  increaseQuantity,
+  decreaseQuantity
+} = cartSlice.actions;
+
 export default cartSlice.reducer;

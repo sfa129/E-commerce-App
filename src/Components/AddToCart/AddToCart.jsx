@@ -1,28 +1,62 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart, clearCart, increaseQuantity, decreaseQuantity } from '../../features/cart/cartSlice';
+import {
+  removeFromCart,
+  clearCart,
+  increaseQuantity,
+  decreaseQuantity,
+  saveCartToFirestoreThunk,
+} from '../../features/cart/cartSlice';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const AddToCart = () => {
+
   const cartItems = useSelector(state => state.cart.items);
+  const user = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const syncCart = () => {
+    if (user?.uid) {
+      dispatch(saveCartToFirestoreThunk({ uid: user.uid, cartItems }));
+    }
+  };
 
   const handleRemove = (id) => {
     dispatch(removeFromCart(id));
+    syncCart();
   };
 
   const handleClearCart = () => {
     dispatch(clearCart());
+    syncCart();
   };
 
   const handleIncrease = (id) => {
     dispatch(increaseQuantity(id));
+    syncCart();
   };
 
   const handleDecrease = (id) => {
     dispatch(decreaseQuantity(id));
+    syncCart();
   };
 
-  const totalAmount = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+  const handleCheckout = () => {
+    if (!user) {
+      // If not logged in, redirect to login page
+      navigate('/Login');
+    } else {
+      // Proceed to actual checkout flow (or payment)
+      alert('Checkout not implemented yet. This would lead to payment.');
+    }
+  };
+
+  const totalAmount = cartItems
+    .reduce((acc, item) => acc + item.price * item.quantity, 0)
+    .toFixed(2);
 
   if (cartItems.length === 0) {
     return (
@@ -71,15 +105,12 @@ const AddToCart = () => {
       </div>
       <div className="flex justify-end mt-4">
         <button
-          onClick={() => {
-            alert('Checkout not implemented yet. This would lead to payment.');
-          }}
+          onClick={handleCheckout}
           className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
         >
           Proceed to Checkout
         </button>
       </div>
-
     </div>
   );
 };
