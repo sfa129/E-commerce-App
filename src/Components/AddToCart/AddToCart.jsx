@@ -9,10 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-
-
 const AddToCart = () => {
-
   const cartItems = useSelector(state => state.cart.items);
   const user = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
@@ -46,11 +43,10 @@ const AddToCart = () => {
 
   const handleCheckout = () => {
     if (!user) {
-      // If not logged in, redirect to login page
       navigate('/Login');
     } else {
-      // Proceed to actual checkout flow (or payment)
-      alert('Checkout not implemented yet. This would lead to payment.');
+      // Redirect to Stripe Payment Link
+      window.location.href = "https://buy.stripe.com/test_4gw4i5fHU2zsdUI3cc";
     }
   };
 

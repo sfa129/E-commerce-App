@@ -103,33 +103,69 @@ const ProductList = () => {
                 <div className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filtered.length > 0 ? (
                         filtered.map((product) => (
-                            <div
-                                key={product.id}
-                                className="border rounded-xl shadow-md p-4 bg-white flex flex-col justify-between"
-                            >
-                                <img
-                                    src={product.image}
-                                    alt={product.title}
-                                    className="h-40 w-full object-contain mb-4"
-                                />
-                                <h2 className="font-semibold text-lg mb-2">{product.title}</h2>
-                                <p className="text-gray-700">${product.price}</p>
-                                <p className="text-sm text-gray-500">{product.category}</p>
-                                <Link to={`/product/${product.id}`} key={product.id} className="flex justify-center">
-                                    <div className="border text-center w-20 mt-4 rounded p-1 shadow hover:shadow-lg">
-                                        <button className="text-center">Details</button>
-                                    </div>
-                                </Link>
-                                <div key={product.id} className="border my-2 w-28 rounded shadow">
+                            // <div
+                            //     key={product.id}
+                            //     className="border rounded-xl shadow-md p-4 bg-white flex flex-col justify-between"
+                            // >
+                            //     <img
+                            //         src={product.image}
+                            //         alt={product.title}
+                            //         className="h-40 w-full object-contain mb-4"
+                            //     />
+                            //     <h2 className="font-semibold text-lg mb-2">{product.title}</h2>
+                            //     <p className="text-gray-700">${product.price}</p>
+                            //     <p className="text-sm text-gray-500">{product.category}</p>
+                            //     <Link to={`/product/${product.id}`} key={product.id} className="flex justify-center">
+                            //         <div className="border text-center w-20 mt-4 rounded p-1 shadow hover:shadow-lg">
+                            //             <button className="text-center">Details</button>
+                            //         </div>
+                            //     </Link>
+                            //     <div key={product.id} className="border my-2 w-28 rounded shadow">
                                     
-                                    <button
-                                        onClick={() => handleAddToCart(product)}
-                                        className="mt-2 bg-blue-600 text-white px-3 py-1 rounded"
-                                    >
-                                        Add to Cart
-                                    </button>
-                                </div>
-                            </div>
+                            //         <button
+                            //             onClick={() => handleAddToCart(product)}
+                            //             className="mt-2 bg-blue-600 text-white px-3 py-1 rounded"
+                            //         >
+                            //             Add to Cart
+                            //         </button>
+                            //     </div>
+                            // </div>
+                            //with stripe
+                            <div key={product.id} className="border rounded-xl shadow-md p-4 bg-white flex flex-col justify-between">
+  <img
+    src={product.image}
+    alt={product.title}
+    className="h-40 w-full object-contain mb-4"
+  />
+  <h2 className="font-semibold text-lg mb-2">{product.title}</h2>
+  <p className="text-gray-700">${product.price}</p>
+  <p className="text-sm text-gray-500">{product.category}</p>
+  
+  <Link to={`/product/${product.id}`} className="flex justify-center">
+    <div className="border text-center w-20 mt-4 rounded p-1 shadow hover:shadow-lg">
+      <button className="text-center">Details</button>
+    </div>
+  </Link>
+
+  <div className="my-2 space-y-2">
+    <button
+      onClick={() => handleAddToCart(product)}
+      className="w-full bg-blue-600 text-white px-3 py-1 rounded"
+    >
+      Add to Cart
+    </button>
+
+    <a
+      href="https://buy.stripe.com/test_bJeeV6cXW590dDhb8A9MY00"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block text-center bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+    >
+      Buy Now
+    </a>
+  </div>
+</div>
+
                         ))
                     ) : (
                         <p className="text-gray-500 col-span-full">No products found.</p>
