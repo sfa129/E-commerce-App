@@ -7,7 +7,7 @@ const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [filtered, setFiltered] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [priceRange, setPriceRange] = useState(1000);
+    const [priceRange, setPriceRange] = useState(200);
     const [selectedCategory, setSelectedCategory] = useState("");
 
     const categories = ["men's clothing", "women's clothing", "jewelery", "electronics"];
@@ -42,7 +42,7 @@ const ProductList = () => {
 
     return (
         <div className="p-6 max-w-7xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6">🛍️ Featured Products</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-6">🛍️ Featured Products</h1>
 
             {/* Search Bar */}
             <div className="mb-6">
@@ -56,16 +56,16 @@ const ProductList = () => {
             </div>
 
             {/* Layout: Sidebar + Product Grid */}
-            <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex flex-col md:flex-row gap-6 ">
                 {/* Sidebar */}
-                <div className="w-full md:w-1/4 space-y-6">
+                <div className="w-full md:w-1/4 p-4 bg-white rounded-xl shadow-lg space-y-8 h-[465px]">
                     {/* Category Filter */}
                     <div>
-                        <h2 className="text-lg font-semibold mb-2">Category</h2>
-                        {/* Back to All Button */}
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Category</h2>
+
                         <button
                             onClick={() => setSelectedCategory("")}
-                            className="mb-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded w-full text-left"
+                            className="mb-3 w-full text-left text-gray-600 hover:text-gray-800 hover:bg-gray-100 px-4 py-2 rounded transition"
                         >
                             ← Back to All
                         </button>
@@ -74,9 +74,11 @@ const ProductList = () => {
                             {categories.map((cat) => (
                                 <div
                                     key={cat}
-                                    className={`cursor-pointer border px-3 py-2 rounded ${selectedCategory === cat ? "bg-blue-500 text-white" : "bg-white"
-                                        }`}
                                     onClick={() => setSelectedCategory(cat === selectedCategory ? "" : cat)}
+                                    className={`cursor-pointer px-4 py-2 rounded-md transition font-medium ${selectedCategory === cat
+                                            ? "bg-blue-600 text-white"
+                                            : "bg-gray-100 text-gray-700 hover:bg-blue-100"
+                                        }`}
                                 >
                                     {cat}
                                 </div>
@@ -86,18 +88,25 @@ const ProductList = () => {
 
                     {/* Price Filter */}
                     <div>
-                        <h2 className="text-lg font-semibold mb-2">Price: Up to ${priceRange}</h2>
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">
+                            Price: <span className="text-blue-600 font-bold">${priceRange}</span>
+                        </h2>
                         <input
                             type="range"
                             min="0"
-                            max="1000"
+                            max="200"
                             step="10"
                             value={priceRange}
                             onChange={(e) => setPriceRange(e.target.value)}
-                            className="w-full"
+                            className="w-full accent-blue-600"
                         />
+                        <div className="flex justify-between text-sm text-gray-500 mt-1">
+                            <span>$0</span>
+                            <span>$200</span>
+                        </div>
                     </div>
                 </div>
+
 
                 {/* Product Grid */}
                 <div className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -127,7 +136,7 @@ const ProductList = () => {
 
                                 {/* Details Link */}
                                 <Link to={`/product/${product.id}`} className="mt-2">
-                                    <button className="w-full border border-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-100 transition">
+                                    <button className="cursor-pointer w-full bg-white-600 text-black hover:bg-gray-600 hover:text-white border border-black hover:text-black py-2 rounded-md  transition">
                                         Details
                                     </button>
                                 </Link>
@@ -136,7 +145,7 @@ const ProductList = () => {
                                 <div className="mt-3 space-y-2">
                                     <button
                                         onClick={() => handleAddToCart(product)}
-                                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-md transition"
+                                        className="cursor-pointer w-full bg-white-600 text-black hover:bg-gray-600 hover:text-white border border-black  py-2 rounded-md transition"
                                     >
                                         Add to Cart
                                     </button>
@@ -145,7 +154,7 @@ const ProductList = () => {
                                         href="https://buy.stripe.com/test_bJeeV6cXW590dDhb8A9MY00"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="block text-center bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-md transition"
+                                        className="block text-center border border-gray-300 text-white bg-black hover:bg-white hover:text-black  py-2 rounded-md transition"
                                     >
                                         Buy Now
                                     </a>

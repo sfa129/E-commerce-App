@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../features/auth/authSlice';
 import { useState } from 'react';
@@ -11,8 +11,10 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
 
-    const [menuOpen, setMenuOpen] = useState(false);
-    
+  const navigate = useNavigate();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
 
   return (
     <nav className="bg-[#ffffff] shadow-md sticky top-0 z-50 h-15">
@@ -33,9 +35,8 @@ function Header() {
 
         {/* Navigation Links */}
         <div
-          className={`${
-            menuOpen ? "flex" : "hidden"
-          } flex-col lg:flex lg:flex-row lg:items-center gap-4 absolute lg:static top-16 left-0 w-full lg:w-auto bg-[#ffffff] px-6 py-4 lg:p-0 shadow-md lg:shadow-none z-40`}
+          className={`${menuOpen ? "flex" : "hidden"
+            } flex-col lg:flex lg:flex-row lg:items-center gap-4 absolute lg:static top-16 left-0 w-full lg:w-auto bg-[#ffffff] px-6 py-4 lg:p-0 shadow-md lg:shadow-none z-40`}
         >
           <Link to="/" className="text-gray-800 hover:text-gray-600 text-base font-medium">
             Home
@@ -47,7 +48,7 @@ function Header() {
               to="/AddToCart"
               className="text-gray-800 hover:text-gray-600 text-base font-medium"
             >
-              🛒 Cart
+              Cart 🛒
             </Link>
             {totalQuantity > 0 && (
               <span className="absolute -top-2 -right-3 bg-gray-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
@@ -63,8 +64,17 @@ function Header() {
                 Welcome, <span className="font-semibold">{user.firstName} {user.lastName}</span>
               </span>
               <button
-                onClick={() => dispatch(logoutUser())}
-                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+                onClick={() => {
+                  dispatch(logoutUser())
+                    .unwrap()
+                    .then(() => {
+                      navigate("/Login");
+                    })
+                    .catch((err) => {
+                      console.error("Logout failed:", err);
+                    });
+                }}
+                className="bg-red-500 w-full sm:w-[150px] text-white px-3 py-1 rounded hover:bg-red-600 transition"
               >
                 Logout
               </button>

@@ -76,6 +76,8 @@ const authSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(logoutUser.fulfilled, (state) => {
+          console.log("Logout successful — state cleared");
+
         state.user = null;
       });
   },

@@ -1,4 +1,3 @@
-// src/features/auth/authAPI.js
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
@@ -25,5 +24,5 @@ export const loginUserAPI = async ({ email, password }) => {
 };
 
 export const logoutUserAPI = async () => {
-  await signOut(auth);
+  await signOut(auth); // ✅ Use real Firebase logout
 };

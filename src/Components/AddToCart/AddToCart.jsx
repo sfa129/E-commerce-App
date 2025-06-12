@@ -56,9 +56,9 @@ const AddToCart = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="p-4 text-center">
-        <h2 className="text-2xl font-semibold mb-4">Your cart is empty 🛒</h2>
-        <Link to="/" className="text-blue-600 underline">Go shopping</Link>
+      <div className="p-4 text-center h-115">
+        <h2 className="text-2xl font-semibold mb-4 mt-20">Your cart is empty 🛒</h2>
+        <Link to="/" className="mx-auto block w-[150px] text-center border border-gray-300 text-white bg-black hover:bg-white hover:text-black  py-2 rounded-md transition">Go shopping</Link>
       </div>
     );
   }
