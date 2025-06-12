@@ -5,9 +5,9 @@ import ProductList from '../../features/products/ProductList'
 function Home() {
   return (
     <>
-    <div>
+    {/* <div>
       <img className='h-[250px] w-auto my-200px' src={heroimg} alt="heroimg" />
-    </div>
+    </div> */}
     <div className='my-10 flex justify-center'>
     <ProductList/>
     </div>
