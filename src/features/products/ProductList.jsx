@@ -36,6 +36,7 @@ const ProductList = () => {
 
     // AddToCart Functionalty
     const dispatch = useDispatch();
+    
     const handleAddToCart = (product) => {
         dispatch(addToCart(product));
     };
